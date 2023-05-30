@@ -46,3 +46,5 @@ group :development do
   # gem "spring"
 end
 
+gem 'responders', '~> 3.1'
+
