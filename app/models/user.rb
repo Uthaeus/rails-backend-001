@@ -9,4 +9,8 @@ class User < ApplicationRecord
   def jwt_payload
     super
   end
+
+  validates_presence_of :username, :email 
+
+  mount_uploader :avatar, AvatarUploader
 end
