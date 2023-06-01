@@ -2,20 +2,41 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
+  before_action :authenticate_user!, except: [:create]
   respond_to :json
+
+  # GET /resource/edit
+  # def edit
+  #   super
+  # end
 
   protected 
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :avatar])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :avatar, :password, :password_confirmation])
+  end
+
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email, :avatar, :password, :password_confirmation, :current_password])
   end
 
   private
+
+  # q: how can i update the user in the method below?
+
 
   def respond_with(resource, _opts = {})
     if request.method === "POST" && resource.persisted?
       render json: {
         status: {code: 200, message: 'Signed up sucessfully.'},
+        data: resource
+      }, status: :ok
+    elsif request.method === "PUT" && resource.persisted?
+      @user = User.find_by(id: current_user.id)
+      @user.update({ username: resource.username, email: resource.email, avatar: resource.avatar, password: resource.password, password_confirmation: resource.password_confirmation })
+      render json: {
+        status: {code: 200, message: 'Account updated sucessfully.'},
         data: resource
       }, status: :ok
     elsif request.method === "DELETE"
@@ -27,11 +48,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
         status: {code: 422, message: "User could not be created successfully. #{resource.errors.full_messages.to_sentence}"}
       }, status: :unprocessable_entity
     end
+    # q: why is the above method not updating the user?
+
+
+
+
+
   end
 
   # before_action :configure_account_update_params, only: [:update]
 
-  # GET /resource/sign_up
+  # GET /resource/sign_upf
   # def new
   #   super
   # end
@@ -41,10 +68,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  
 
   # PUT /resource
   # def update
