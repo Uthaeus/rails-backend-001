@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     delete 'users/:id', to: 'users/registrations#destroy'
   end
 
+  resources :liked_quotes, only: [:create, :destroy]
+
   get 'home', to: 'pages#home'
   get 'user_check', to: 'pages#user_check'
 end

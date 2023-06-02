@@ -13,4 +13,6 @@ class User < ApplicationRecord
   validates_presence_of :username, :email 
 
   mount_uploader :avatar, AvatarUploader
+
+  has_many :liked_quotes, dependent: :destroyj
 end
