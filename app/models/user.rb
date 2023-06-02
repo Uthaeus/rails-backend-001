@@ -14,5 +14,21 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  has_many :liked_quotes, dependent: :destroyj
+  has_many :liked_quotes, dependent: :destroy
+
+  def liked_quote?(quote)
+    liked_quotes.find_by_quote(quote)
+  end
+
+  def like(quote)
+    liked_quotes.create(quote: quote.quote, author: quote.author)
+  end
+
+  def unlike(quote)
+    liked_quotes.find_by_quote(quote).destroy
+  end
+
+  def liked_quotes 
+    LikedQuote.where(user_id: id)
+  end
 end

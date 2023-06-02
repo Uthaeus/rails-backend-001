@@ -7,6 +7,6 @@ class PagesController < ApplicationController
   end
 
   def user_check
-    render json: current_user
+    render json: current_user, include: :liked_quotes
   end
 end
