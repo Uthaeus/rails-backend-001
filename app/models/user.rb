@@ -15,6 +15,7 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   has_many :liked_quotes, dependent: :destroy
+  has_many :blogs, dependent: :destroy
 
   def liked_quote?(quote)
     liked_quotes.find_by_quote(quote)
