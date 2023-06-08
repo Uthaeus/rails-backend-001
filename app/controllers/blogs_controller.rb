@@ -6,22 +6,22 @@ class BlogsController < ApplicationController
 
   def index
     @blogs = Blog.all
-    respond_with(@blogs)
+    render json: @blogs, include: :user
   end
 
   def show
-    respond_with(@blog)
+    render json: @blog
   end
 
   def create
     @blog = Blog.new(blog_params)
     @blog.save
-    respond_with(@blog)
+    render json: @blog
   end
 
   def update
     @blog.update(blog_params)
-    respond_with(@blog)
+    render json: @blog
   end
 
   def destroy
