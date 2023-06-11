@@ -9,4 +9,9 @@ class PagesController < ApplicationController
   def user_check
     render json: current_user, include: :liked_quotes
   end
+
+  def user_detail
+    @user = User.find(params[:id])
+    render json: @user, include: [:blogs, :comments, :liked_quotes]
+  end
 end

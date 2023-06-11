@@ -15,4 +15,5 @@ Rails.application.routes.draw do
 
   get 'home', to: 'pages#home'
   get 'user_check', to: 'pages#user_check'
+  get 'user_detail/:id', to: 'pages#user_detail'
 end

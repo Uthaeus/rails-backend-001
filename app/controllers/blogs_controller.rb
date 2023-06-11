@@ -8,9 +8,12 @@ class BlogsController < ApplicationController
     @blogs = Blog.all
     render json: @blogs, include: :user
   end
+  # q: how to include user data for comments in show action?
+  # a: render json: @blog, include: [:comments, :user]
+  # q: how can i include comments user data in show action?
 
   def show
-    render json: @blog
+    render json: @blog.to_json(include: [:user, :comments => {include: :user}])
   end
 
   def create
