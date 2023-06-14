@@ -10,7 +10,7 @@ class Users::SessionsController < Devise::SessionsController
     if resource.persisted?
       render json: {
         status: {code: 200, message: 'Logged in sucessfully.'},
-        data: current_user
+        data: current_user, include: [:liked_quotes, :blogs, :comments]
       }, status: :ok
     else
       render json: {

@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :liked_quotes, dependent: :destroy
   has_many :blogs, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :categories, dependent: :destroy
 
   def liked_quote?(quote)
     liked_quotes.find_by_quote(quote)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_08_024214) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_192411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +20,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_024214) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "category_id"
     t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "title"
+    t.bigint "blog_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_categories_on_blog_id"
+    t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -59,6 +70,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_024214) do
   end
 
   add_foreign_key "blogs", "users"
+  add_foreign_key "categories", "blogs"
+  add_foreign_key "categories", "users"
   add_foreign_key "comments", "blogs"
   add_foreign_key "comments", "users"
   add_foreign_key "liked_quotes", "users"
