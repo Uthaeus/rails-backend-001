@@ -6,14 +6,14 @@ class BlogsController < ApplicationController
 
   def index
     @blogs = Blog.all
-    render json: @blogs, include: :user
+    render json: @blogs, include: [:user, :category]
   end
   # q: how to include user data for comments in show action?
   # a: render json: @blog, include: [:comments, :user]
   # q: how can i include comments user data in show action?
 
   def show
-    render json: @blog.to_json(include: [:user, :comments => {include: :user}])
+    render json: @blog.to_json(include: [:category, :user, :comments => {include: :user}])
   end
 
   def create
@@ -38,6 +38,6 @@ class BlogsController < ApplicationController
     end
 
     def blog_params
-      params.require(:blog).permit(:title, :body, :user_id)
+      params.require(:blog).permit(:title, :body, :user_id, :category_id)
     end
 end
