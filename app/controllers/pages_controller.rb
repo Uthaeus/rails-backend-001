@@ -7,11 +7,11 @@ class PagesController < ApplicationController
   end
 
   def user_check
-    render json: current_user, include: [:liked_quotes, :blogs, :comments]
+    render json: current_user, include: [:liked_quotes, :blogs, :comments, :posts, :post_likes]
   end
 
   def user_detail
     @user = User.find(params[:id])
-    render json: @user, include: [:blogs, :comments, :liked_quotes, :posts]
+    render json: @user, include: [:blogs, :comments, :liked_quotes, :posts, :post_likes]
   end
 end
