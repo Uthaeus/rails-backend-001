@@ -1,31 +1,31 @@
 class PostCommentsController < ApplicationController
   before_action :set_post_comment, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :destroy]
 
   respond_to :json
 
   def index
     @post_comments = PostComment.all
-    respond_with(@post_comments)
+    render json: @post_comments, include: [:user]
   end
 
   def show
-    respond_with(@post_comment)
+    render json: @post_comment, include: [:user]
   end
 
   def create
     @post_comment = PostComment.new(post_comment_params)
     @post_comment.save
-    respond_with(@post_comment)
+    render json: @post_comment, include: [:user]
   end
 
   def update
     @post_comment.update(post_comment_params)
-    respond_with(@post_comment)
+    render json: @post_comment
   end
 
   def destroy
     @post_comment.destroy
-    respond_with(@post_comment)
   end
 
   private

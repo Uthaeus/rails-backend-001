@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    render json: @post, include: [:user]
+    render json: @post, include: [:user, :post_comments, :post_likes, :post_comments => {:include => [:user]}]
   end
 
   def create
