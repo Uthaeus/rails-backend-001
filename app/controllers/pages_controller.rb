@@ -12,6 +12,6 @@ class PagesController < ApplicationController
 
   def user_detail
     @user = User.find(params[:id])
-    render json: @user, include: [:blogs, :comments, :liked_quotes]
+    render json: @user, include: [:blogs, :comments, :liked_quotes, :posts]
   end
 end
